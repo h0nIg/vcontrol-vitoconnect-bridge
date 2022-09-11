@@ -5,7 +5,7 @@ no support, just bunch of scripts and descriptions
 ## 
 * connect Optolink-Kabel to /ttyUSB0
 * add CP210x USB-UART adapter to raspberry PI (GPIO pins, connect TX to RX on USB, RX to TX)
-* disable limited UART interface and turn off bluetooth
+* disable limited UART interface and turn off bluetooth (at least for raspberry PI 3)
 ```
 /boot/config.txt
 ...
