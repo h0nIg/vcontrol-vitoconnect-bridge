@@ -5,6 +5,7 @@ import os
 import serial
 import time
 import socket
+import socketserver
 
 requests = queue.Queue()
 response_vitoconnect = queue.Queue()
@@ -52,13 +53,18 @@ def printbytes(type, bytes):
 
 def addrequest(s, name, responsequeue):
     while True:
-        header = read(s, 1)
-        if not header:
-            continue
+        try:
+            header = s.read(1)
+            if not header:
+                continue
+        except AttributeError:
+            header = s.recv(1)
+            if not header:
+                break
 
-        printbytes("REQ HEADER", header)
+        printbytes(name + " REQ HEADER", header)
         if header == bytes([0x04]):
-            print("P300 RESET")
+            print(name + " P300 RESET")
             write(s, [0x05])
         elif header == bytes([0x16]):
             p300 = read(s, 2)
@@ -66,7 +72,7 @@ def addrequest(s, name, responsequeue):
                 flush(s)
                 continue
 
-            print("P300 START")
+            print(name + " P300 START")
             write(s, [0x06])
         else:
             lenbyte = read(s, 1)
@@ -76,7 +82,7 @@ def addrequest(s, name, responsequeue):
             len = int.from_bytes(lenbyte, byteorder='little') + 1
             msg = header + lenbyte + read(s, len)
 
-            printbytes("REQ BODY", msg)
+            printbytes(name + " REQ BODY", msg)
 
             with responsequeue.mutex:
                 responsequeue.queue.clear()
@@ -88,7 +94,7 @@ def addrequest(s, name, responsequeue):
                 responsequeue.task_done()
                 write(s, response)
             except queue.Empty:
-                print("no response within 1 second")
+                print(name + "no response within 1 second")
 
 def sendrequest(s):
     init = False
@@ -128,7 +134,6 @@ def sendrequest(s):
             print("REQ KEEPALIVE")
 
             s.flushInput()
-            # any dummy command to keep connection alive
             s.write([0x41, 0x05, 0x00, 0x61, 0x00, 0xf8, 0x01, 0x5f])
 
             continue
@@ -176,27 +181,22 @@ thread2 = threading.Thread(target=sendrequest, args=(ser_heating,),)
 print('START')
 
 thread2.start()
-thread1.start()
+#thread1.start()
 
-port = 12345
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(("127.0.0.1", port))
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
+    def handle(self):
+        addrequest(self.request, "proxy" + str(self.client_address[1]), response_proxy)
 
-# put the socket into listening mode
-s.listen(5)
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    daemon_threads = True
+    pass
+
+server = ThreadedTCPServer(('127.0.0.1', 12345), ThreadedTCPRequestHandler)
+
+server_thread = threading.Thread(target=server.serve_forever)
+server_thread.daemon = True
+server_thread.start()
 
 print('STARTED')
 
-# a forever loop until client wants to exit
-while True:
-
-    # establish connection with client
-    c, addr = s.accept()
-
-    print('Connected to :', addr[0], ':', addr[1])
-
-    # Start a new thread and return its identifier
-    threadc = threading.Thread(target=addrequest, args=(c, "proxy" + str(addr[1]), response_proxy,),)
-    threadc.start()
-
-s.close()
+server_thread.join()
