@@ -1,0 +1,14 @@
+[Unit]
+Description=VControlD Vitoconnect Bridge
+After=syslog.target systemd-udev-settle.service
+
+[Service]
+Type=exec
+ExecStart=/usr/local/sbin/vcontrold-vitoconnect
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=120
+StandardOutput=file:/var/log/vcontrold-vitoconnect.log
+
+[Install]
+WantedBy=multi-user.target
