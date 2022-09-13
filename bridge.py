@@ -181,7 +181,7 @@ thread2 = threading.Thread(target=sendrequest, args=(ser_heating,),)
 print('START')
 
 thread2.start()
-#thread1.start()
+thread1.start()
 
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
