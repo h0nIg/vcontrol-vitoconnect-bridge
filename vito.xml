@@ -123,7 +123,7 @@
       <unit>UT</unit>
       <description>XX</description>
     </command>
-    <command name="getKKHeissGasTempVerdichter" protocmd="getaddr">
+    <command name="getKKHeissGasTempVerfluessiger" protocmd="getaddr">
       <addr>B439</addr>
       <len>3</len>
       <unit>UT</unit>
@@ -178,15 +178,7 @@
         <precommand>getWeekDay</precommand>
         <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
     </command>
-
-    <!-- https://github.com/openv/openv/wiki/Adressen-W%C3%A4rmepumpen-Vitotronic-WO1C -->
-    <command name="getKKLeistung" protocmd="getaddr">
-        <addr>B423</addr>
-        <len>4</len>
-        <unit>PR1</unit>
-        <description>Kaeltekreis Verdichter 1 - Verdichterleistung</description>
-    </command>
-
+    
     <!-- https://github.com/openv/openv/issues/480 -->
     <command name="getEnergieHeizwaerme" protocmd="getaddr">
         <addr>1640</addr>
