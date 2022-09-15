@@ -5,7 +5,138 @@
      <device ID="204D" name="V200-S" protocol="P300"/>
  </devices>
  <commands xmlns:xi="http://www.w3.org/2003/XInclude">
+
 <!-- CUSTOM -->
+    <command name="getKKPrimaerVL" protocmd="getaddr">
+      <addr>B400</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKPrimaerRL" protocmd="getaddr">
+      <addr>B401</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKSekundaerVL" protocmd="getaddr">
+      <addr>B402</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKSekundaerRL" protocmd="getaddr">
+      <addr>B403</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKFluessigGasTemp" protocmd="getaddr">
+      <addr>B404</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKVerdampfungSollTemp" protocmd="getaddr">
+      <addr>B406</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKVerdampfungTemp" protocmd="getaddr">
+      <addr>B407</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKKondensationsTemp" protocmd="getaddr">
+      <addr>B408</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKSaugGasTemp" protocmd="getaddr">
+      <addr>B409</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKHeissGasTemp" protocmd="getaddr">
+      <addr>B40A</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKUeberhitzungSollTemp" protocmd="getaddr">
+      <addr>B40B</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKUeberhitzungTemp" protocmd="getaddr">
+      <addr>B40C</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKSaugGasDruck" protocmd="getaddr">
+      <addr>B410</addr>
+      <len>3</len>
+      <unit>BD</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKHeissGasDruck" protocmd="getaddr">
+      <addr>B411</addr>
+      <len>3</len>
+      <unit>BD</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKPrimaer" protocmd="getaddr">
+      <addr>B420</addr>
+      <len>2</len>
+      <unit>PR1</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKSekundaerPumpe" protocmd="getaddr">
+      <addr>B421</addr>
+      <len>2</len>
+      <unit>PR1</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKVerdichterLeistung" protocmd="getaddr">
+      <addr>B423</addr>
+      <len>2</len>
+      <unit>PR1</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKExpansionsventil" protocmd="getaddr">
+      <addr>B424</addr>
+      <len>2</len>
+      <unit>PR1</unit>
+      <description>XX</description>
+    </command>
+
+    <!-- brute forced -->
+    <command name="getKKSaugGasTempVerdampfer" protocmd="getaddr">
+      <addr>B435</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKHeissGasTempVerdichter" protocmd="getaddr">
+      <addr>B439</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <command name="getKKUeberhitzungTempVerdichter" protocmd="getaddr">
+      <addr>B43C</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+    <!-- END brute forced -->
+
      <command name="getTempAMittel" protocmd="getaddr">
          <addr>160D</addr>
          <len>3</len>
@@ -52,10 +183,10 @@
     <command name="getKKLeistung" protocmd="getaddr">
         <addr>B423</addr>
         <len>4</len>
-        <unit>PR</unit>
+        <unit>PR1</unit>
         <description>Kaeltekreis Verdichter 1 - Verdichterleistung</description>
     </command>
-    
+
     <!-- https://github.com/openv/openv/issues/480 -->
     <command name="getEnergieHeizwaerme" protocmd="getaddr">
         <addr>1640</addr>
