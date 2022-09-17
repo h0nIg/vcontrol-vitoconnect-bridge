@@ -143,6 +143,7 @@ def sendrequest(s):
 
             keepR = s.read(1)
             if not keepR or keepR != bytes([0x06]):
+                print("REQ KEEPALIVE FAIL")
                 printbytes("REQ KEEPALIVE FAIL", keepR)
                 init = False
 
