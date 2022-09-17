@@ -7,6 +7,8 @@
         </serial>
         <net>
                 <port>3002</port>
+                <allow ip='127.0.0.1'/>
+                <allow ip='192.168.0.5/32'/>
         </net>
         <logging>
                 <file>/var/log/vcontrold.log</file>
@@ -32,31 +34,47 @@
     </unit>
     <unit name='FuncEnergyEWW'>
       <abbrev>FEEWW</abbrev>
-      <calc get="((BB*2*2*2*2*2*2*2*2) + BA) / 10"/>
-      <icalc set="P4"/>
+      <calc get="((BB*2*2*2*2*2*2*2*2) + BA) / 10"/><!-- 2^8 is a bit shift of 8 -->
+      <!--
+        P4 = workday
+        P5 = hour
+        The values are "0" between 0am-1am and we need to take the value from the previous day for continous reporting.
+
+        x | (~x + 1) will cause a bit flip in the most significant bit IF the value is greater than 0.
+        We need to shift this specific bit to the last significant bit, negate it to have a 1 byte result and AND it to receive a "1" between 0am-1am and "0" for the rest of the time.
+        If we are at week day "0" we can not do this and can continue to use "0" as value.
+      -->
+      <icalc set="P4 - (((~((P5 | ((~P5) + 1)) >> 31)) &amp; 1) &amp; (((P4 | ((~P4) + 1)) >> 31) &amp; 1))"/>
       <type>short</type>
       <entity>kWh</entity>
     </unit>
     <unit name='FuncEnergyEHeat'>
       <abbrev>FEEH</abbrev>
       <calc get="((B7*2*2*2*2*2*2*2*2) + B6) / 10"/>
-      <icalc set="P4"/>
+      <icalc set="P4 - (((~((P5 | ((~P5) + 1)) >> 31)) &amp; 1) &amp; (((P4 | ((~P4) + 1)) >> 31) &amp; 1))"/>
       <type>short</type>
       <entity>kWh</entity>
     </unit>
     <unit name='FuncEnergyWWW'>
       <abbrev>FEWWW</abbrev>
       <calc get="((B9*2*2*2*2*2*2*2*2) + B8) / 10"/>
-      <icalc set="P4"/>
+      <icalc set="P4 - (((~((P5 | ((~P5) + 1)) >> 31)) &amp; 1) &amp; (((P4 | ((~P4) + 1)) >> 31) &amp; 1))"/>
       <type>short</type>
       <entity>kWh</entity>
     </unit>
     <unit name='FuncEnergyWHeat'>
       <abbrev>FEWH</abbrev>
       <calc get="((B5*2*2*2*2*2*2*2*2) + B4) / 10"/>
-      <icalc set="P4"/>
+      <icalc set="P4 - (((~((P5 | ((~P5) + 1)) >> 31)) &amp; 1) &amp; (((P4 | ((~P4) + 1)) >> 31) &amp; 1))"/>
       <type>short</type>
       <entity>kWh</entity>
+    </unit>
+
+    <unit name='Bar'>
+       <abbrev>BD</abbrev>
+       <calc get='V/10' set='V*10'/>
+       <type>short</type>
+       <entity>Bar Druck</entity>
     </unit>
 
 <!-- END CUSTOM -->
@@ -144,7 +162,7 @@
            <enum bytes='07' text='nur Kuehlen'/>
 
            <enum text='UNKNOWN'/>
-        </unit>    
+        </unit>
          <unit name='SetReturnStatus'>
            <abbrev>SR</abbrev>
            <type>enum</type>
@@ -289,6 +307,11 @@
                 <command name="getaddr">
                      <send>GETADDR $addr $hexlen;RECV $len $unit</send>
                 </command>
+<!-- CUSTOM -->
+                <command name="getaddrnounit">
+                     <send>GETADDR $addr $hexlen;RECV $len</send>
+                </command>
+<!-- END CUSTOM -->
                 <command name="setaddr">
                      <send>SETADDR $addr $hexlen;SEND BYTES $unit;RECV 1 SR</send>
                 </command>
@@ -300,7 +323,7 @@
         <command name="setfunc">
           <send>SEND 00 07 $addr 02 02;SEND BYTES $unit;RECV $len $unit</send>
         </command>
-<!-- END CUSTOM -->        
+<!-- END CUSTOM -->
           </commands>
       </protocol>
       <protocol name='KW2'>
