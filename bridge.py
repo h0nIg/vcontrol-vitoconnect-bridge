@@ -134,7 +134,7 @@ def sendrequest(s):
             print("REQ KEEPALIVE")
 
             s.flushInput()
-            s.write([0x41, 0x05, 0x00, 0x61, 0x00, 0xf8, 0x01, 0x5f])
+            s.write([0x16, 0x00, 0x00])
 
             continue
 
