@@ -116,7 +116,7 @@
       <description>XX</description>
     </command>
 
-    <!-- brute forced -->
+    <!-- brute force -->
     <command name="getKKSaugGasTempVerdampfer" protocmd="getaddr">
       <addr>B435</addr>
       <len>3</len>
@@ -135,7 +135,7 @@
       <unit>UT</unit>
       <description>XX</description>
     </command>
-    <!-- END brute forced -->
+    <!-- END brute force -->
 
      <command name="getTempAMittel" protocmd="getaddr">
          <addr>160D</addr>
@@ -178,7 +178,7 @@
         <precommand>getWeekDay</precommand>
         <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
     </command>
-    
+
     <!-- https://github.com/openv/openv/issues/480 -->
     <command name="getEnergieHeizwaerme" protocmd="getaddr">
         <addr>1640</addr>
@@ -232,7 +232,6 @@
         <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
     </command>
 
-    <!-- N/A - COP ist scheinbar allgemein, gibt kein COPWW COPHeiz-->
      <command name="getCOPWW" protocmd="getaddr">
          <addr>1691</addr>
          <len>1</len>
