@@ -116,6 +116,11 @@ def sendrequest(s):
                 if initR:
                     printbytes("INIT", initR)
 
+                    # heater reset, time for sync required
+                    if initR == bytes([0xFF]):
+                        time.sleep(10)
+                        continue
+
                     # we have a response which is not "not initialized"
                     if initR != bytes([0x05]):
                         s.flushInput()
@@ -135,6 +140,11 @@ def sendrequest(s):
 
             s.flushInput()
             s.write([0x16, 0x00, 0x00])
+
+            keepR = s.read(1)
+            if not keepR or keepR != bytes([0x06]):
+                printbytes("REQ KEEPALIVE FAIL", keepR)
+                init = False
 
             continue
 
