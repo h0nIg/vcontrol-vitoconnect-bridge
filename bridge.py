@@ -50,6 +50,8 @@ def printbytes(type, bytes):
         for c in bytes:
             print("%02x " % c, end="")
         print()
+    else:
+      print(type)
 
 def addrequest(s, name, responsequeue):
     while True:
@@ -108,6 +110,7 @@ def sendrequest(s):
             s.flushInput()
 
             # reset
+            time.sleep(10)
             s.write([0x04])
 
             while True:
@@ -121,8 +124,8 @@ def sendrequest(s):
                         time.sleep(10)
                         continue
 
-                    # we have a response which is not "not initialized"
-                    if initR != bytes([0x05]):
+                    # we have an init responsn
+                    if initR == bytes([0x06]):
                         s.flushInput()
                         break
                 else:
@@ -143,7 +146,6 @@ def sendrequest(s):
 
             keepR = s.read(1)
             if not keepR or keepR != bytes([0x06]):
-                print("REQ KEEPALIVE FAIL")
                 printbytes("REQ KEEPALIVE FAIL", keepR)
                 init = False
 
