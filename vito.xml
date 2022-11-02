@@ -7,6 +7,76 @@
  <commands xmlns:xi="http://www.w3.org/2003/XInclude">
 
 <!-- CUSTOM -->
+      <command name="getRaumTempODERVLKuehl" protocmd="getaddr">
+         <addr>01D9</addr>
+         <len>3</len>
+         <unit>UT</unit>
+         <description>Raumtemperatursensor ODER Vorlauftemperatursensor Kuehlkreis</description>
+     </command>
+
+     <command name="getTempVLSollAnlage" protocmd="getaddr">
+         <addr>1804</addr>
+         <len>2</len>
+         <unit>UT</unit>
+         <description>Diagnose - Anlage: Vorlaufsolltemperatur (0..95)</description>
+     </command>
+
+     <command name="getAnzQuellePri" protocmd="getaddr">
+         <addr>0500</addr>
+         <len>4</len>
+         <unit>CO</unit>
+         <description>Statistik - Schaltzyklen Anlage: Einschaltungen Primaerquelle (?)</description>
+     </command>
+  
+     <command name="getTempAMittel" protocmd="getaddr">
+         <addr>160D</addr>
+         <len>3</len>
+         <unit>UT</unit>
+         <description>Information - Allgemein: Mittel Aussentemperatur (-40..70)</description>
+     </command>
+
+     <command name="getCOPWW" protocmd="getaddr">
+         <addr>1691</addr>
+         <len>1</len>
+         <unit>UN</unit>
+         <description>Statistik - Energiebilanz: COP Warmwasser (0..1)</description>
+     </command>
+
+    <command name="getWeekDay" protocmd="getaddr">
+      <addr>08E0</addr>
+      <len>8</len>
+      <unit>WD</unit>
+      <description>Ermittle Wochentag</description>
+    </command>
+    <command name="getWocheEnergieEWW" protocmd="setfunc">
+        <addr>B800</addr>
+        <len>16</len>
+        <unit>FEEWW</unit>
+        <precommand>getWeekDay</precommand>
+        <description>Statistik - Energiebilanz: Elektroenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
+    </command>
+    <command name="getWocheEnergieEHeizen" protocmd="setfunc">
+        <addr>B800</addr>
+        <len>16</len>
+        <unit>FEEH</unit>
+        <precommand>getWeekDay</precommand>
+        <description>Statistik - Energiebilanz: Elektroenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
+    </command>
+    <command name="getWocheEnergieWWW" protocmd="setfunc">
+        <addr>B800</addr>
+        <len>16</len>
+        <unit>FEWWW</unit>
+        <precommand>getWeekDay</precommand>
+        <description>Statistik - Energiebilanz: Waermeenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
+    </command>
+    <command name="getWocheEnergieWHeizen" protocmd="setfunc">
+        <addr>B800</addr>
+        <len>16</len>
+        <unit>FEWH</unit>
+        <precommand>getWeekDay</precommand>
+        <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
+    </command>
+
     <command name="getKKPrimaerVL" protocmd="getaddr">
       <addr>B400</addr>
       <len>3</len>
@@ -136,108 +206,6 @@
       <description>XX</description>
     </command>
     <!-- END brute force -->
-
-     <command name="getTempAMittel" protocmd="getaddr">
-         <addr>160D</addr>
-         <len>3</len>
-         <unit>UT</unit>
-         <description>Information - Allgemein: Mittel Aussentemperatur (-40..70)</description>
-     </command>
-
-    <command name="getWeekDay" protocmd="getaddr">
-      <addr>08E0</addr>
-      <len>8</len>
-      <unit>WD</unit>
-      <description>Ermittle Wochentag</description>
-    </command>
-    <command name="getWocheEnergieEWW" protocmd="setfunc">
-        <addr>B800</addr>
-        <len>16</len>
-        <unit>FEEWW</unit>
-        <precommand>getWeekDay</precommand>
-        <description>Statistik - Energiebilanz: Elektroenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
-    </command>
-    <command name="getWocheEnergieEHeizen" protocmd="setfunc">
-        <addr>B800</addr>
-        <len>16</len>
-        <unit>FEEH</unit>
-        <precommand>getWeekDay</precommand>
-        <description>Statistik - Energiebilanz: Elektroenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
-    </command>
-    <command name="getWocheEnergieWWW" protocmd="setfunc">
-        <addr>B800</addr>
-        <len>16</len>
-        <unit>FEWWW</unit>
-        <precommand>getWeekDay</precommand>
-        <description>Statistik - Energiebilanz: Waermeenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
-    </command>
-    <command name="getWocheEnergieWHeizen" protocmd="setfunc">
-        <addr>B800</addr>
-        <len>16</len>
-        <unit>FEWH</unit>
-        <precommand>getWeekDay</precommand>
-        <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
-    </command>
-
-    <!-- https://github.com/openv/openv/issues/480 -->
-    <command name="getEnergieHeizwaerme" protocmd="getaddr">
-        <addr>1640</addr>
-        <len>4</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Heizwärme "Heizbetrieb", Verdichter 1</description>
-    </command>
-    <command name="getEnergieHeizwaermeWW" protocmd="getaddr">
-        <addr>1650</addr>
-        <len>4</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Heizwärme "WW-Betrieb", Verdichter 1</description>
-    </command>
-
-    <command name="getEnergieHeizelektro" protocmd="getaddr">
-        <addr>1660</addr>
-        <len>4</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Elektroenergie "Heizbetrieb", Verdichter 1</description>
-    </command>
-    <command name="getEnergieWWelektro" protocmd="getaddr">
-        <addr>1670</addr>
-        <len>4</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Elektroenergie "WW-Betrieb", Verdichter 1</description>
-    </command>
-
-    <command name="getEnergieEWocheWW" protocmd="getaddr">
-        <addr>16D0</addr>
-        <len>2</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Elektroenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
-    </command>
-    <command name="getEnergieEWocheHeizen" protocmd="getaddr">
-        <addr>16D1</addr>
-        <len>2</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Elektroenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
-    </command>
-
-    <command name="getEnergieWWocheWW" protocmd="getaddr">
-        <addr>16D2</addr>
-        <len>2</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Waermeenergie "WW-Betrieb 1 Woche", Verdichter 1</description>
-    </command>
-    <command name="getEnergieWWocheHeizen" protocmd="getaddr">
-        <addr>16D3</addr>
-        <len>2</len>
-        <unit>CO</unit>
-        <description>Statistik - Energiebilanz: Waermeenergie "Heizbetrieb 1 Woche", Verdichter 1</description>
-    </command>
-
-     <command name="getCOPWW" protocmd="getaddr">
-         <addr>1691</addr>
-         <len>1</len>
-         <unit>CO</unit>
-         <description>Statistik - Energiebilanz: COP Warmwasser (0..10)</description>
-     </command>
 <!-- END CUSTOM -->
 
      <command name="getDevType" protocmd="getaddr">
@@ -636,9 +604,9 @@
          <addr>1690</addr>
 <!-- CUSTOM -->
          <len>1</len>
+         <unit>UN</unit>
 <!-- CUSTOM -->
-         <unit>CO</unit>
-         <description>Statistik - Energiebilanz: COP Heizbetrieb (0..10)</description>
+         <description>Statistik - Energiebilanz: COP Heizbetrieb (0..1)</description>
      </command>
      <command name="getTempSekVLMittel" protocmd="getaddr">
          <addr>16B2</addr>
