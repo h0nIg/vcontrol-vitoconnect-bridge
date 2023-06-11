@@ -7,11 +7,102 @@
  <commands xmlns:xi="http://www.w3.org/2003/XInclude">
 
 <!-- CUSTOM -->
+
+<!-- https://github.com/Phil1pp/openv-vcontrold-docker/blob/main/config/vito.xml -->
+     <command name="getAnzAbtauung" protocmd="getaddr">
+         <addr>0546</addr>
+         <len>4</len>
+         <unit>CO</unit>
+         <description>xx</description>
+     </command>
+     <command name="getStatusAbtauung" protocmd="getaddr">
+         <addr>B446</addr>
+         <len>1</len>
+         <bit>0</bit>
+         <unit>BST</unit>
+         <description>xx</description>
+     </command>
+     <command name="getStatusAbtauungUmkehr" protocmd="getaddr">
+         <addr>B444</addr>
+         <len>1</len>
+         <bit>0</bit>
+         <unit>BST</unit>
+         <description>xx</description>
+     </command>
+
+
+
+     <command name="getIntegralWWEHeiz" protocmd="getaddr">
+         <addr>1340</addr>
+         <len>2</len>
+         <unit>PR1</unit>
+         <description>xx</description>
+     </command>
+     <command name="getIntegralWW" protocmd="getaddr">
+         <addr>1342</addr>
+         <len>2</len>
+         <unit>PR1</unit>
+         <description>xx</description>
+     </command>
+     <command name="getIntegralHKEHeiz" protocmd="getaddr">
+         <addr>1343</addr>
+         <len>2</len>
+         <unit>PR1</unit>
+         <description>xx</description>
+     </command>
+     <command name="getIntegralHK" protocmd="getaddr">
+         <addr>1345</addr>
+         <len>2</len>
+         <unit>PR1</unit>
+         <description>xx</description>
+     </command>
+     <command name="getIntegralAbtauung" protocmd="getaddr">
+         <addr>134B</addr>
+         <len>2</len>
+         <unit>PR1</unit>
+         <description>xx</description>
+     </command>
+
+
+     <command name="getStatusStator" protocmd="getaddr">
+         <addr>0E28</addr>
+         <len>3</len>
+         <unit>CO</unit>
+         <description>xx</description>
+     </command>
+     <command name="getStatusBetriebsart" protocmd="getaddr">
+         <addr>B000</addr>
+         <len>1</len>
+         <unit>CO</unit>
+         <description>xx</description>
+     </command>
+
+     <command name="setBetriebsart" protocmd="setaddr">
+         <addr>B000</addr>
+         <len>1</len>
+         <unit>ST</unit>
+         <description>Bedienung HK1 - Heizkreis 1: Betriebsart (0..4)</description>
+     </command>
+
+     <command name="setTempRaumSoll" protocmd="setaddr">
+         <addr>2000</addr>
+         <len>2</len>
+         <unit>UT</unit>
+         <description>Heizkreis HK1: Raumsolltemperatur HK1 von FB (10..30)</description>
+     </command>
+
       <command name="getRaumTempODERVLKuehl" protocmd="getaddr">
          <addr>01D9</addr>
          <len>3</len>
          <unit>UT</unit>
          <description>Raumtemperatursensor ODER Vorlauftemperatursensor Kuehlkreis</description>
+     </command>
+
+     <command name="setFreigabeAC" protocmd="setaddr">
+         <addr>71FE</addr>
+         <len>1</len>
+         <unit>CO</unit>
+         <description>Freigabe active cooling (0=AUS, 1=EIN)</description>
      </command>
 
      <command name="getTempVLSollAnlage" protocmd="getaddr">
@@ -33,13 +124,6 @@
          <len>3</len>
          <unit>UT</unit>
          <description>Information - Allgemein: Mittel Aussentemperatur (-40..70)</description>
-     </command>
-
-     <command name="getCOPWW" protocmd="getaddr">
-         <addr>1691</addr>
-         <len>1</len>
-         <unit>UN</unit>
-         <description>Statistik - Energiebilanz: COP Warmwasser (0..1)</description>
      </command>
 
     <command name="getWeekDay" protocmd="getaddr">
@@ -205,6 +289,13 @@
       <unit>UT</unit>
       <description>XX</description>
     </command>
+    <command name="getKKKaeltekreisReglerTemp" protocmd="getaddr">
+      <addr>B43D</addr>
+      <len>3</len>
+      <unit>UT</unit>
+      <description>XX</description>
+    </command>
+
     <!-- END brute force -->
 <!-- END CUSTOM -->
 
