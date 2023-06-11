@@ -4,9 +4,12 @@
      <config>
         <serial>
                 <tty>127.0.0.1:12345</tty>
+<!--            <tty>/dev/ttyUSB0</tty>-->
         </serial>
         <net>
                 <port>3002</port>
+                <allow ip='127.0.0.1'/>
+                <allow ip='192.168.0.5/32'/>
         </net>
         <logging>
                 <file>/var/log/vcontrold.log</file>
@@ -160,7 +163,7 @@
            <enum bytes='07' text='nur Kuehlen'/>
 
            <enum text='UNKNOWN'/>
-        </unit>
+        </unit>    
          <unit name='SetReturnStatus'>
            <abbrev>SR</abbrev>
            <type>enum</type>
@@ -298,7 +301,9 @@
                     <command>SEND 00 01</command>
                 </macro>
                 <macro name='SETADDR'>
-                    <command>SEND 01 F4</command>
+<!-- CUSTOM -->
+                    <command>SEND 00 02</command>
+<!-- END CUSTOM -->
                 </macro>
           </macros>
           <commands>
@@ -321,7 +326,7 @@
         <command name="setfunc">
           <send>SEND 00 07 $addr 02 02;SEND BYTES $unit;RECV $len $unit</send>
         </command>
-<!-- END CUSTOM -->
+<!-- END CUSTOM -->        
           </commands>
       </protocol>
       <protocol name='KW2'>
