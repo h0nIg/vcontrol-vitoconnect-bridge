@@ -7,6 +7,7 @@
  <commands xmlns:xi="http://www.w3.org/2003/XInclude">
 
 <!-- CUSTOM -->
+
 <!-- https://github.com/Phil1pp/openv-vcontrold-docker/blob/main/config/vito.xml -->
      <command name="getAnzAbtauung" protocmd="getaddr">
          <addr>0546</addr>
