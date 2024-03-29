@@ -84,6 +84,13 @@
          <description>Bedienung HK1 - Heizkreis 1: Betriebsart (0..4)</description>
      </command>
 
+     <command name="setHeizstabWarmwasser" protocmd="setaddr">
+         <addr>6015</addr>
+         <len>1</len>
+         <unit>ST</unit>
+         <description>Heizstab WW</description>
+     </command>
+
      <command name="setTempRaumSoll" protocmd="setaddr">
          <addr>2000</addr>
          <len>2</len>
@@ -101,6 +108,18 @@
      <command name="setFreigabeAC" protocmd="setaddr">
          <addr>71FE</addr>
          <len>1</len>
+         <unit>BST</unit>
+         <description>Freigabe active cooling (0=AUS, 1=EIN)</description>
+     </command>
+     <command name="getFreigabeAC" protocmd="getaddrnounit">
+         <addr>71FE</addr>
+         <len>1</len>
+         <unit>CO</unit>
+         <description>Freigabe active cooling (0=AUS, 1=EIN)</description>
+     </command>
+     <command name="getFreigabeAC2" protocmd="getaddrnounit">
+         <addr>8603</addr>
+         <len>1</len>  
          <unit>CO</unit>
          <description>Freigabe active cooling (0=AUS, 1=EIN)</description>
      </command>

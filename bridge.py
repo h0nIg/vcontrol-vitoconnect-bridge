@@ -64,7 +64,7 @@ def addrequest(s, name, responsequeue):
             if not header:
                 break
 
-        printbytes(name + " REQ HEADER", header)
+        #printbytes(name + " REQ HEADER", header)
         if header == bytes([0x04]):
             print(name + " P300 RESET")
             write(s, [0x05])
@@ -84,7 +84,7 @@ def addrequest(s, name, responsequeue):
             len = int.from_bytes(lenbyte, byteorder='little') + 1
             msg = header + lenbyte + read(s, len)
 
-            printbytes(name + " REQ BODY", msg)
+            #printbytes(name + " REQ BODY", msg)
 
             with responsequeue.mutex:
                 responsequeue.queue.clear()
@@ -155,27 +155,27 @@ def sendrequest(s):
         if request['msg']:
             start_time = time.strftime("%d.%m.%Y %H:%M:%S")
 
-            print(request['name'],  end="")
-            print(" ", end="")
-            print(start_time, end="")
-            print(" ", end="")
+            #print(request['name'],  end="")
+            #print(" ", end="")
+            #print(start_time, end="")
+            #print(" ", end="")
 
-            for c in request['msg']:
-                print("%02x " % c, end="")
-            print()
+            #for c in request['msg']:
+            #    print("%02x " % c, end="")
+            #print()
 
             s.flushInput()
 
             s.write(request['msg'])
             header = s.read(2)
-            printbytes("RESP HEADER", header)
+            #printbytes("RESP HEADER", header)
             lenbyte = s.read(1)
             if not lenbyte:
                 print("INIT REQUIRED 2?")
                 init = False
                 continue
 
-            printbytes("RESP LEN", lenbyte)
+            #printbytes("RESP LEN", lenbyte)
             len = int.from_bytes(lenbyte, byteorder='little') + 1
             msg = s.read(len)
             if not msg:
@@ -183,7 +183,7 @@ def sendrequest(s):
                 init = False
                 continue
 
-            printbytes("RESP BODY", msg)
+            #printbytes("RESP BODY", msg)
 
             request['queue'].put(header + lenbyte + msg)
 

@@ -4,14 +4,18 @@
      <config>
         <serial>
                 <tty>127.0.0.1:12345</tty>
+<!--            <tty>/dev/ttyUSB0</tty>-->
         </serial>
         <net>
                 <port>3002</port>
+                <allow ip='127.0.0.1'/>
+                <allow ip='192.168.128.0/32'/>
         </net>
         <logging>
                 <file>/var/log/vcontrold.log</file>
                 <syslog>n</syslog>
-                <debug>y</debug>
+<!--            <debug>y</debug>-->
+                <debug>n</debug>
         </logging>
         <device ID="204D"/>
      </config>
