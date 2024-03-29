@@ -4,6 +4,7 @@
      <config>
         <serial>
                 <tty>127.0.0.1:12345</tty>
+<!--            <tty>/dev/ttyUSB0</tty>-->
         </serial>
         <net>
                 <port>3002</port>
@@ -11,7 +12,8 @@
         <logging>
                 <file>/var/log/vcontrold.log</file>
                 <syslog>n</syslog>
-                <debug>y</debug>
+<!--            <debug>y</debug>-->
+                <debug>n</debug>
         </logging>
         <device ID="204D"/>
      </config>
@@ -315,6 +317,30 @@
                 <command name="setaddr">
                      <send>SETADDR $addr $hexlen;SEND BYTES $unit;RECV 1 SR</send>
                 </command>
+<!-- CUSTOM -->
+                <command name="setaddrschedule">
+                     <send>SEND 00 02 $addr 03 00;SEND BYTES $unit;RECV 1 SR</send>
+                </command>
+                <command name="setaddrschedule2">
+                     <send>SEND 00 02 $addr 02 01 00;RECV 1 SR</send>
+                </command>
+                <command name="setaddrtest1">
+                     <send>SEND 00 02 $addr 02 05 00;RECV 1 SR</send>
+                </command>
+                <command name="setaddrtest2">
+                     <send>SEND 00 02 $addr 02 55 00;RECV 1 SR</send>
+                </command>
+                <command name="setaddrtest3">
+                     <send>SEND 00 02 $addr 02 B4 00;RECV 1 SR</send>
+                </command>
+                <command name="setaddrtest4">
+                     <send>SEND 00 02 $addr 02 BE 00;RECV 1 SR</send>
+                </command>
+                <command name="setaddrtest5">
+                     <send>SEND 00 02 $addr 01 02;RECV 1 SR</send>
+                </command>
+
+<!-- END CUSTOM -->
                 <command name="gettestaddr">
                      <send></send>
                 </command>
