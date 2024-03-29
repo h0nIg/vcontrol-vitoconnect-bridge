@@ -204,7 +204,7 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     daemon_threads = True
     pass
 
-server = ThreadedTCPServer(('0.0.0.0', 12345), ThreadedTCPRequestHandler)
+server = ThreadedTCPServer(('127.0.0.1', 12345), ThreadedTCPRequestHandler)
 
 server_thread = threading.Thread(target=server.serve_forever)
 server_thread.daemon = True
