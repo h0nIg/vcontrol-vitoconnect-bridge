@@ -8,6 +8,8 @@
         </serial>
         <net>
                 <port>3002</port>
+                <allow ip='127.0.0.1'/>
+                <allow ip='192.168.128.0/32'/>
         </net>
         <logging>
                 <file>/var/log/vcontrold.log</file>
