@@ -113,7 +113,8 @@ def sendrequest(s):
             time.sleep(10)
             s.write([0x04])
 
-            while True:
+            # avoid boot loop of heater, abort after 10 tries
+            for x in range(10):
                 initR = s.read(1)
                 # optolink periodically sends x05 every 2 seconds
                 if initR:
@@ -127,14 +128,19 @@ def sendrequest(s):
                     # we have an init responsn
                     if initR == bytes([0x06]):
                         s.flushInput()
+
+                        init = True
+                        print("INIT DONE")
+
                         break
                 else:
                     # hammer until we have a successful session
                     print("P300 KEEPALIVE")
                     s.write([0x16, 0x00, 0x00])
 
-            init = True
-            print("INIT DONE")
+        if init == False:
+            time.sleep(10)
+            continue
 
         try:
             request = requests.get(True, 1)
