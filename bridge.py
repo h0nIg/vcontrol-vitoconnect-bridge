@@ -11,8 +11,8 @@ requests = queue.Queue()
 response_vitoconnect = queue.Queue()
 response_proxy = queue.Queue()
 
-## open devices
-ser_heating = serial.Serial("/dev/ttyUSB0",
+## open devices (/dev/ttyUSB0)
+ser_heating = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0",
                      baudrate=4800,
                      parity=serial.PARITY_EVEN,
                      stopbits=serial.STOPBITS_TWO,
@@ -195,7 +195,9 @@ def sendrequest(s):
 
 
 thread1 = threading.Thread(target=addrequest, args=(ser_vitoconnect, "vitoconnect", response_vitoconnect,),)
+thread1.daemon = True
 thread2 = threading.Thread(target=sendrequest, args=(ser_heating,),)
+thread2.daemon = True
 
 print('START')
 
@@ -218,4 +220,5 @@ server_thread.start()
 
 print('STARTED')
 
-server_thread.join()
+# wait for thread2 - because it may get stuck and abort
+thread2.join()
