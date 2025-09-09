@@ -166,9 +166,9 @@ def sendrequest(s):
             #print(" ", end="")
             #print(start_time, end="")
             #print(" ", end="")
-            ##print()
             #for c in request['msg']:
             #    print("%02x " % c, end="")
+            #print()
 
             s.flushInput()
 
