@@ -5,9 +5,10 @@ After=syslog.target systemd-udev-settle.service
 [Service]
 Type=exec
 ExecStart=/usr/local/sbin/vcontrold-vitoconnect
+Environment="PYTHONUNBUFFERED=1"
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
-RestartSec=120
+RestartSec=120s
 StandardOutput=file:/var/log/vcontrold-vitoconnect.log
 
 [Install]
