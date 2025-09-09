@@ -6,6 +6,7 @@ import serial
 import time
 import socket
 import socketserver
+import sys
 
 requests = queue.Queue()
 response_vitoconnect = queue.Queue()
@@ -165,7 +166,6 @@ def sendrequest(s):
             #print(" ", end="")
             #print(start_time, end="")
             #print(" ", end="")
-
             #for c in request['msg']:
             #    print("%02x " % c, end="")
             #print()
@@ -195,8 +195,8 @@ def sendrequest(s):
 
 
 thread1 = threading.Thread(target=addrequest, args=(ser_vitoconnect, "vitoconnect", response_vitoconnect,),)
-thread1.daemon = True
 thread2 = threading.Thread(target=sendrequest, args=(ser_heating,),)
+thread1.daemon = True
 thread2.daemon = True
 
 print('START')
@@ -220,5 +220,8 @@ server_thread.start()
 
 print('STARTED')
 
-# wait for thread2 - because it may get stuck and abort
 thread2.join()
+
+print('STOPPING')
+
+sys.exit(1)
